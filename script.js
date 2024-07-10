@@ -1,9 +1,8 @@
-  // Import the functions you need from the SDKs you need
-  import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
-  // TODO: Add SDKs for Firebase products that you want to use
-  // https://firebase.google.com/docs/web/setup#available-libraries
 
-  // Your web app's Firebase configuration
+  import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+
+  import { getAuth,GoogleAuthProvider, signInWithPopup, sendEmailVerification } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
+
   const firebaseConfig = {
     apiKey: "AIzaSyDieZOVNNH3d10pPH006ppT1OL6fFn1UeU",
     authDomain: "quiz-app-ecb8e.firebaseapp.com",
@@ -13,13 +12,50 @@
     appId: "1:505178996930:web:d23661ecb9a734737f3b5b"
   };
 
-  // Initialize Firebase
-  const app = initializeApp(firebaseConfig); 
+ 
 
   //inputs
 
   const email = document.getElementById("email")
-
   const password = document.getElementById("password")
-
   const submit = document.getElementById("submit")
+//email and password
+submit.addEventListener("click", function (event){
+    event.preventDefault()
+    alert("fiver")
+    console.log("fdyecgk")
+})
+
+
+  // Initialize Firebase
+const app = initializeApp(firebaseConfig);
+const provider = new GoogleAuthProvider()
+const auth = getAuth(app)
+
+const user = auth.currentUser
+
+ const signG = () => {
+      signInWithPopup(auth, provider)
+      .then((result)=>{
+        console.log(result)
+
+
+        sendEmailVerification(auth.currentUser)
+        .then((reponse) => {
+          console.log(reponse)
+          console.log("email sent")
+        })
+        .catch((error)=>{
+          console.log(error)
+        });
+
+        result?window.location.href = "index.html":window.location.href = "signup.html"
+
+      
+      })
+      .catch((error)=>{
+        console.log(error)
+      })
+    }
+
+    window.signG = signG
